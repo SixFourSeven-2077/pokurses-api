@@ -2,6 +2,7 @@ from typing import List
 
 from django.db import models
 import json
+from random import shuffle
 # Create your models here.
 
 values = {
@@ -55,6 +56,7 @@ class Deck(models.Model):
         for suit in range(1, 5):
             for value in range(1, 13):
                 cards_list.append(Card(suit, value))
+        shuffle(cards_list)
         self.cards_json = json.dumps(json.dumps([card.__dict__ for card in cards_list]))
 
 
