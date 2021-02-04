@@ -3,6 +3,8 @@ from typing import List
 from django.db import models
 import json
 from random import shuffle
+from datetime import datetime
+
 # Create your models here.
 
 values = {
@@ -50,6 +52,7 @@ class Card(object):
 class Deck(models.Model):
     id = models.AutoField(primary_key=True)
     cards_json = models.JSONField(null=True)
+    date = models.DateTimeField(default=datetime.now, blank=True)
 
     def populate_full(self):
         cards_list = []
@@ -64,6 +67,7 @@ class Party(models.Model):
     id = models.AutoField(primary_key=True)
     join_code = models.CharField(max_length=64)
     deck = models.OneToOneField(Deck, on_delete=models.SET_NULL, null=True)
+    date = models.DateTimeField(default=datetime.now, blank=True)
 
 
 class Player(models.Model):
@@ -71,4 +75,5 @@ class Player(models.Model):
     name = models.CharField(max_length=20)
     party = models.OneToOneField(Party, on_delete=models.SET_NULL, null=True)
     deck = models.OneToOneField(Deck, on_delete=models.SET_NULL, null=True)
+    date = models.DateTimeField(default=datetime.now, blank=True)
 
